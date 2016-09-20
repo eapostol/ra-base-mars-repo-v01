@@ -1,0 +1,29 @@
+@import 'reset';
+@import 'theme';
+
+* {
+	box-sizing: border-box;
+}
+
+html, body {
+	background: $colour_black;
+	@include font-default;
+}
+
+h1 {
+	font-size:2rem;
+}
+
+h2 {
+	font-size:1.8rem;
+}
+
+h3 {
+	font-size:1.5rem;
+}
+
+.page-container {
+	width: 100vw;
+	height: 100vh;
+}
+

@@ -1,0 +1,30 @@
+{
+  "name": "ra-base-mars-repo-v01",
+  "version": "1.0.0",
+  "description": "The Base Mars Repo for Red Academy, v01.0",
+  "angular-cli": {},
+  "scripts": {
+    "start": "ng server",
+    "postinstall": "typings install",
+    "lint": "tslint \"src/**/*.ts\"",
+    "test": "ng test",
+    "pree2e": "webdriver-manager update",
+    "e2e": "protractor"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eapostol/ra-base-mars-repo-v01.git"
+  },
+  "keywords": [
+    "Angular",
+    "2",
+    "CLI",
+    "kind of stable"
+  ],
+  "author": "Edward J. Apostol <edward.apostol@redacademy.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eapostol/ra-base-mars-repo-v01/issues"
+  },
+  "homepage": "https://github.com/eapostol/ra-base-mars-repo-v01#readme"
+}

@@ -1,0 +1,217 @@
+// IMPORTS
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,100);
+
+
+// THEME
+
+/* Colours */
+
+$colour_red: #ed4343;
+$colour_red-rgb: 237,67,67;
+$colour_black: #222;
+$colour_white: white;
+
+/* Fonts */
+
+$font_base-family: Roboto, sans-serif;
+
+$font_base-size: 16px;
+$font_base-color: $colour_white;
+$font_base-weight: 100;
+
+@mixin font_default {
+	color:       $font_base-color;
+	font-family: $font_base-family;
+	font-weight: $font_base-weight;
+	font-size:   $font_base-size;
+}
+
+@mixin font_default-red {
+	@include font_default;
+	color: $colour_red;
+}
+
+@mixin font_default-black {
+	@include font_default;
+	color: $colour_black;
+}
+
+.inverse {
+	background:$colour_white;
+	color:  $colour_black;
+}
+
+/* Forms */
+
+form {
+	padding:2rem;
+}
+
+button, input {
+	@include font_default;
+}
+
+button {
+	border:none;
+	box-shadow:none;
+	width:100%;
+	padding:1rem 2rem;
+	text-align:center;
+    font-size: $font_base-size * 2;
+	background: $colour_black;
+}
+
+input {
+	color:$colour_white;
+	border:none;
+	border-bottom: 1px solid $colour_white;
+	box-shadow:none;
+	height:2rem;
+	width:100%;
+	padding-left:0.5rem;
+	background: none;
+	margin-bottom: 1.5rem;
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+	@include font_default-red;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	@include font_default-red;
+	opacity: 1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+	@include font_default-red;
+	opacity: 1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+	@include font_default-red;
+}
+
+.custom-select {
+    position: relative;
+    height: 2rem;
+    display: block;
+    padding: 0;
+    width: 100%;
+	height: 2rem;
+    border-bottom: 1px solid #fff;
+}
+/* This is the native select, we're making everything but the text invisible so we can see the button styles in the wrapper */
+
+.custom-select select {
+    width: 100%;
+    margin: 0;
+    background: none;
+    border: 1px solid transparent;
+    outline: none;
+	padding-left: .5rem;
+
+	/* Remove select styling */
+	-moz-appearance: none;
+	-webkit-appearance: none;
+
+	@include font_default-red;
+    line-height: 2rem;
+
+}
+/* Custom arrow sits on top of the select - could be an image, SVG, icon font, etc. or the arrow could just baked into the bg image on the select. Note this si a 2x image so it will look bad in browsers that don't support background-size. In production, you'd handle this resolution switch via media query but this is a demo. */
+
+.custom-select::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+}
+
+/* Focus style */
+
+.custom-select select:focus {
+    outline: none;
+}
+/* ------------------------------------  */
+/* START OF UGLY BROWSER-SPECIFIC HACKS */
+/* ----------------------------------  */
+                                                                                                                                                x:-o-prefocus, .custom-select::after {
+    display: none;
+}
+/* IE 10/11+ - This hides native dropdown button arrow so it will have the custom appearance, IE 9 and earlier get a native select - targeting media query hack via http://browserhacks.com/#hack-28f493d247a12ab654f6c3637f6978d5 - looking for better ways to achieve this targeting */
+/* The second rule removes the odd blue bg color behind the text in the select button in IE 10/11 and sets the text color to match the focus style's - fix via http://stackoverflow.com/questions/17553300/change-ie-background-color-on-unopened-focused-select-box */
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .custom-select select::-ms-expand {
+        display: none;
+    }
+    .custom-select select:focus::-ms-value {
+        background: transparent;
+        color: $colour_black;
+    }
+}
+
+/* FIREFOX won't let us hide the native select arrow, so we have to make it wider than needed and clip it via overflow on the parent container. The percentage width is a fallback since FF 4+ supports calc() so we can just add a fixed amount of extra width to push the native arrow out of view. We're applying this hack across all FF versions because all the previous hacks were too fragile and complex. You might want to consider not using this hack and using the native select arrow in FF. Note this makes the menus wider than the select button because they display at the specified width and aren't clipped. Targeting hack via http://browserhacks.com/#hack-758bff81c5c32351b02e10480b5ed48e */
+/* Show only the native arrow */
+
+@-moz-document url-prefix() {
+    .custom-select {
+        overflow: hidden;
+    }
+    .custom-select select {
+        width: 120%;
+        width: -moz-calc(100% + 3em);
+        width: calc(100% + em);
+    }
+}
+/* Firefox focus has odd artifacts around the text, this kills that. See https://developer.mozilla.org/en-US/docs/Web/CSS/:-moz-focusring */
+
+.custom-select select:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 $colour_black;
+}
+
+/* Animations */
+
+@keyframes invalid-input {
+	0% {
+		box-shadow:
+			0 0 0 0rem rgba($colour_red, 1);
+	}
+	100% {
+		box-shadow:
+			0 0 0 0.5rem rgba($colour_red, 0.2);
+	}
+}
+
+@keyframes border-pulse {
+  0%   {
+	box-shadow:
+		0 0 0 1rem rgba(255, 255, 255, 0.1),
+		0 0 0 2rem rgba(255, 255, 255, 0.15),
+		0 0 0 3rem rgba(255, 255, 255, 0.2);
+  }
+  50%  {
+
+	box-shadow:
+		0 0 0 1.25rem rgba(255, 255, 255, 0.1),
+		0 0 0 2.75rem rgba(255, 255, 255, 0.1),
+		0 0 0 4rem rgba(255, 255, 255, 0);
+
+	}
+ 75%  {
+
+	box-shadow:
+		0 0 0 1.50rem rgba(255, 255, 255, 0.1),
+		0 0 0 3rem rgba(255, 255, 255, 0),
+		0 0 0 5rem rgba(255, 255, 255, 0);
+
+	}
+  100% {
+
+	box-shadow:
+		0 0 0 1.75rem rgba(255, 255, 255, 0),
+		0 0 0 3.75rem rgba(255, 255, 255, 0),
+		0 0 0 6rem rgba(255, 255, 255, 0);
+
+   }
+}
+
+
