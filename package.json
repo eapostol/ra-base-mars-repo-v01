@@ -41,7 +41,7 @@
     "tslint": "^3.6.0",
     "typescript": "^1.8.10",
     "typings": "^0.8.1"
-  }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/eapostol/ra-base-mars-repo-v01.git"
